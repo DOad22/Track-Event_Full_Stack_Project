@@ -17,3 +17,4 @@ Main Goal: Provide a platform for users to create, organize, and track events an
 
 #  User Stories
 - As a Event Creater(Daljeet kaur), I want to create and manage events so that my friends and I can plan activities easily.
+- As a participant tracker(Prabhjot Singh), I want to record and view scores so that I can track results of games.
