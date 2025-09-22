@@ -1,35 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
+import '../src/App.css'
+import EventCreator from './components/event-creator/EventCreator';
+import ScoreTracking from "./components/score-tracker/score";
+import PastEvents from "./components/event-history/PastEvents";
+import ParticipantList from "./components/participant-manager/ParticipantList";
 function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+return (
+    <div className="app">
+      <header className="app-header">
+        <h1>Game tracking </h1>
+      </header>
+      <main>
+        <EventCreator/>
+        <ScoreTracking />
+        <ParticipantList />
+        <PastEvents/>
+      </main>
+      <footer className="app-footer">
         <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
+          Created by: Daljeet Kaur, Sukhtab Singh Warya, Prabhjot Singh, Arshnoorpreet Kaur
         </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      </footer>
+    </div>
+  );
 }
 
-export default App
+export default App;
