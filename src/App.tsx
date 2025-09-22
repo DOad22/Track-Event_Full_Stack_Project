@@ -1,4 +1,5 @@
 import '../src/App.css'
+import EventCreator from './components/event-creator/EventCreator';
 import ScoreTracking from "./components/score-tracker/score"
 function App() {
 
@@ -8,7 +9,7 @@ return (
         <h1>Game tracking </h1>
       </header>
       <main>
-
+        <EventCreator/>
         <ScoreTracking />
       </main>
       <footer className="app-footer">
