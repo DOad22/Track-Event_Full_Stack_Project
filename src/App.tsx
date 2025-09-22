@@ -1,6 +1,7 @@
 import '../src/App.css'
 import EventCreator from './components/event-creator/EventCreator';
-import ScoreTracking from "./components/score-tracker/score"
+import ScoreTracking from "./components/score-tracker/score";
+import PastEvents from "./components/event-history/PastEvents";
 function App() {
 
 return (
@@ -11,6 +12,7 @@ return (
       <main>
         <EventCreator/>
         <ScoreTracking />
+        <PastEvents/>
       </main>
       <footer className="app-footer">
         <p>
