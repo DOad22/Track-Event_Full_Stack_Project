@@ -1,0 +1,16 @@
+.past-events {
+  margin: 20px;
+}
+
+.past-events h2 {
+  margin-bottom: 10px;
+}
+
+.past-events ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.past-events li {
+  margin: 5px 0;
+}
