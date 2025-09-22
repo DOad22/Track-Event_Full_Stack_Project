@@ -2,6 +2,7 @@ import '../src/App.css'
 import EventCreator from './components/event-creator/EventCreator';
 import ScoreTracking from "./components/score-tracker/score";
 import PastEvents from "./components/event-history/PastEvents";
+import ParticipantList from "./components/participant-manager/ParticipantList";
 function App() {
 
 return (
@@ -12,6 +13,7 @@ return (
       <main>
         <EventCreator/>
         <ScoreTracking />
+        <ParticipantList />
         <PastEvents/>
       </main>
       <footer className="app-footer">
