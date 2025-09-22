@@ -1,4 +1,5 @@
-@import "./components/participant-manager/participant.css";
+@import "./components/score-tracker/score.css";
+
 /*
   Pastel Colors
  
@@ -8,7 +9,7 @@
   #FFF2EF - Redish White
  
 */
- 
+
 body {
   margin: 0;
   padding: 0;
