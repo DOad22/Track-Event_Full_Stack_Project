@@ -1,28 +1,30 @@
-import '../src/App.css'
-import EventCreator from './components/event-creator/EventCreator';
+import "../src/App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+ import EventCreator from "./components/event-creator/EventCreator";
 import ScoreTracking from "./components/score-tracker/score";
 import PastEvents from "./components/event-history/PastEvents";
 import ParticipantList from "./components/participant-manager/ParticipantList";
-function App() {
+import Header from "./Header/header";
+import Footer from "./Footer/footer";
 
-return (
-    <div className="app">
-      <header className="app-header">
-        <h1>Game tracking </h1>
-      </header>
-      <main>
-        <EventCreator/>
-        <ScoreTracking />
-        <ParticipantList />
-        <PastEvents/>
-      </main>
-      <footer className="app-footer">
-        <p>
-          Created by: Daljeet Kaur, Sukhtab Singh Warya, Prabhjot Singh, Arshnoorpreet Kaur
-        </p>
-      </footer>
-    </div>
+function App() {
+  return (
+    <Router>
+      <div className="app">
+        <Header />
+        <main>
+          <Routes>
+            <Route path="/" element={<h2>Welcome to EventHub</h2>} />
+            <Route path="/create" element={<EventCreator />} />
+            <Route path="/scores" element={<ScoreTracking />} />
+            <Route path="/participants" element={<ParticipantList />} />
+            <Route path="/past" element={<PastEvents />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </Router>
   );
 }
-
+ 
 export default App;
