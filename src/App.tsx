@@ -5,6 +5,7 @@ import ScoreTracking from "./components/score-tracker/score";
 import PastEvents from "./components/event-history/PastEvents";
 import ParticipantList from "./components/participant-manager/ParticipantList";
 import Header from "./Header/header";
+import Footer from "./Footer/footer";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
             <Route path="/past" element={<PastEvents />} />
           </Routes>
         </main>
-        {/* <Footer /> */}
+        <Footer />
       </div>
     </Router>
   );
