@@ -1,23 +1,25 @@
 import "../src/App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useState } from "react"; 
 import EventCreator from "./components/event-creator/EventCreator";
 import ScoreTracking from "./components/score-tracker/score";
 import PastEvents from "./components/event-history/PastEvents";
 import ParticipantList from "./components/participant-manager/ParticipantList";
 import Header from "./Header/header";
 import Footer from "./Footer/footer";
-import { useState } from "react";
+import { Participant, Score } from "./types";
 
 function App() {
-  const [participants, setParticipants] = useState< { id: number; name: string; game: string }[]>([]);
-
-  const [scores, setScores] = useState<{ participantId: number; points: number }[]>([]);
+  const [participants, setParticipants] = useState<Participant[]>([]);
+  const [scores, setScores] = useState<Score[]>([]);
 
   const addParticipant = (name: string, game: string) => {
-    setParticipants([
-      ...participants,
-      { id: Date.now(), name, game },
-    ]);
+    const newParticipant = {
+      id: Date.now(),
+      name,
+      game,
+    };
+    setParticipants([...participants, newParticipant]);
   };
 
   const addScore = (participantId: number, points: number) => {
@@ -59,5 +61,4 @@ function App() {
     </Router>
   );
 }
-
 export default App;
