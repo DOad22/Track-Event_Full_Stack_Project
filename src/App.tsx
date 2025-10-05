@@ -22,7 +22,6 @@ function App() {
     setParticipants([...participants, newParticipant]);
   };
 
-  // Add score for participant
   const addScore = (participantId: number, points: number) => {
     setScores([...scores, { participantId, points }]);
   };
@@ -35,8 +34,25 @@ function App() {
           <Routes>
             <Route path="/" element={<h2>Welcome to EventHub</h2>} />
             <Route path="/create" element={<EventCreator />} />
-            <Route path="/scores" element={<ScoreTracking participants={participants}scores={scores}addScore={addScore}/>}/>
-            <Route path="/participants"element={<ParticipantList participants={participants} addParticipant={addParticipant}/>}/>
+            <Route
+              path="/scores"
+              element={
+                <ScoreTracking
+                  participants={participants}
+                  scores={scores}
+                  addScore={addScore}
+                />
+              }
+            />
+            <Route
+              path="/participants"
+              element={
+                <ParticipantList
+                  participants={participants}
+                  addParticipant={addParticipant}
+                />
+              }
+            />
             <Route path="/past" element={<PastEvents />} />
           </Routes>
         </main>
@@ -45,5 +61,4 @@ function App() {
     </Router>
   );
 }
-
 export default App;
