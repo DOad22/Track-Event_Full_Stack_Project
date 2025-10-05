@@ -1,7 +1,7 @@
 import "../src/App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState } from "react"; 
-import EventCreator from "./components/event-creator/EventCreator";
+import { useState } from "react";   
+import EventCreator from "./components/event-creator/EventCreator"; 
 import ScoreTracking from "./components/score-tracker/score";
 import PastEvents from "./components/event-history/PastEvents";
 import ParticipantList from "./components/participant-manager/ParticipantList";
@@ -25,6 +25,8 @@ function App() {
   const addScore = (participantId: number, points: number) => {
     setScores([...scores, { participantId, points }]);
   };
+
+    const [message, setMessage] = useState("Welcome to EventHub Shared State!");
 
   return (
     <Router>
@@ -53,7 +55,7 @@ function App() {
                 />
               }
             />
-            <Route path="/past" element={<PastEvents />} />
+            <Route path="/past" element={<PastEvents message={message} setMessage={setMessage} />} />
           </Routes>
         </main>
         <Footer />
