@@ -8,18 +8,58 @@
 
 .event-creator {
   background-color: var(--color-redWhite);
-  padding: 20px;
-  border-radius: 12px;
-  max-width: 420px;
-  margin: 20px auto;
+  padding: 25px;
+  border-radius: 16px;
+  max-width: 650px;
+  margin: 30px auto;
   font-family: Arial, sans-serif;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease-in-out;
+}
+
+.event-creator:hover {
+  transform: translateY(-4px);
 }
 
 .event-creator h2 {
   color: var(--color-midnight);
   text-align: center;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  font-size: 26px;
+  letter-spacing: 1px;
+}
+
+.event-creator form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.event-creator input,
+.event-creator button {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 2px solid var(--color-darkBlue);
+  font-size: 14px;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.event-creator input:focus {
+  border-color: var(--color-midnight);
+  box-shadow: 0 0 6px rgba(18, 16, 99, 0.4);
+}
+
+.event-creator button {
+  background-color: var(--color-darkBlue);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.event-creator button:hover {
+  background-color: var(--color-midnight);
 }
 
 .event-creator ul {
@@ -30,15 +70,33 @@
 .event-creator li {
   background: var(--color-gold);
   border: 2px solid var(--color-darkBlue);
-  margin: 8px 0;
-  padding: 10px;
-  border-radius: 8px;
+  margin: 10px 0;
+  padding: 12px 14px;
+  border-radius: 10px;
   color: var(--color-darkBlue);
   font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   transition: background 0.3s, transform 0.2s;
 }
 
 .event-creator li:hover {
   background: var(--color-redPeach);
   transform: scale(1.02);
+}
+
+.event-creator li button {
+  margin-left: 8px;
+  background: var(--color-midnight);
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.event-creator li button:hover {
+  background: var(--color-darkBlue);
 }

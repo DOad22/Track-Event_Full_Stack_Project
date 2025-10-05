@@ -1,28 +1,82 @@
-import "./EventCreator.css";   
+import { useState, useEffect } from "react";
 
-function EventCreator() {
-  // A list of static events with name, date, and time
-  const events = [
-    { name: "Cricket Match", date: "2025-09-20", time: "10:00 AM" },
-    { name: "Football Game", date: "2025-09-22", time: "03:30 PM" },
-    { name: "Basketball Tournament", date: "2025-09-25", time: "01:00 PM" },
-    { name: "Volleyball Game", date: "2025-09-28", time: "11:30 AM" },
-    { name: "Badminton Match", date: "2025-10-01", time: "09:00 AM" }
-  ];
+function EventApp() {
+  const [name, setName] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [events, setEvents] = useState<any[]>([]);
 
-  // Show the events on the screen
+  // Load events from localStorage when the page loads
+  useEffect(() => {
+    const saved = localStorage.getItem("events");
+    if (saved) {
+      setEvents(JSON.parse(saved));
+    }
+  }, []);
+
+  // Save events 
+  const saveEvents = (updated: any[]) => {
+    setEvents(updated);
+    localStorage.setItem("events", JSON.stringify(updated));
+  };
+
+  // Add new event
+  const addEvent = (e: any) => {
+    e.preventDefault();
+    if (!name || !date || !time) return;
+    const newEvent = {
+      id: Date.now(), 
+      name,
+      date,
+      time
+    };
+    saveEvents([...events, newEvent]);
+    setName("");
+    setDate("");
+    setTime("");
+  };
+
+  // Delete event
+  const deleteEvent = (id: number) => {
+    const updated = events.filter(ev => ev.id !== id);
+    saveEvents(updated);
+  };
+
   return (
-    <section className="event-creator">
-      <h2>Upcoming Events</h2>
+    <div>
+      <h2>Create Event</h2>
+      <form onSubmit={addEvent}>
+        <input
+          placeholder="Event Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+        />
+        <input
+          type="time"
+          value={time}
+          onChange={(e) => setTime(e.target.value)}
+        />
+        <button type="submit">Add Event</button>
+      </form>
+
+      <h3>Events</h3>
       <ul>
-        {events.map((ev, i) => (
-          <li key={i}>
+        {events.map(ev => (
+          <li key={ev.id}>
             {ev.name} - {ev.date} at {ev.time}
+            <button onClick={() => deleteEvent(ev.id)} style={{ marginLeft: 6 }}>
+              Delete
+            </button>
           </li>
         ))}
       </ul>
-    </section>
+    </div>
   );
 }
 
-export default EventCreator;
+export default EventApp;
