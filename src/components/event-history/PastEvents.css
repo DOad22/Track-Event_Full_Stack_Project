@@ -1,5 +1,6 @@
 .past-events {
   margin: 20px;
+  text-align: center;
 }
 
 .past-events h2 {
@@ -7,10 +8,15 @@
 }
 
 .past-events ul {
-  list-style-type: disc;
-  padding-left: 20px;
+  list-style: none;
+  padding: 0;
 }
 
 .past-events li {
   margin: 5px 0;
+}
+
+.shared-msg {
+  margin-bottom: 10px;
+  font-weight: bold;
 }
