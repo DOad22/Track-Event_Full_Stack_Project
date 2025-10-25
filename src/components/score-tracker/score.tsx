@@ -1,16 +1,16 @@
 import { useState } from "react";
 import "./score.css";
-import { Participant, Score } from "../../types";
+import { useScores } from "../../hooks/useScores";
+import { Participant } from "../../types";
 
 interface Props {
   participants: Participant[];
-  scores: Score[];
-  addScore: (participantId: number, points: number) => void;
 }
 
-export default function ScoreTracker({ participants, scores, addScore }: Props) {
-  const [selectedId, setSelectedId] = useState<string>("");
-  const [points, setPoints] = useState<string>("");
+export default function ScoreTracker({ participants }: Props) {
+  const { scores, addScore } = useScores();
+  const [selectedId, setSelectedId] = useState("");
+  const [points, setPoints] = useState("");
 
   const handleAdd = () => {
     if (selectedId && points) {
@@ -25,7 +25,10 @@ export default function ScoreTracker({ participants, scores, addScore }: Props) 
       <h2>Score Tracking</h2>
 
       <div className="form">
-        <select value={selectedId} onChange={(e) => setSelectedId(e.target.value)}>
+        <select
+          value={selectedId}
+          onChange={(e) => setSelectedId(e.target.value)}
+        >
           <option value="">Select Participant</option>
           {participants.map((p) => (
             <option key={p.id} value={p.id}>
@@ -39,7 +42,6 @@ export default function ScoreTracker({ participants, scores, addScore }: Props) 
           onChange={(e) => setPoints(e.target.value)}
           placeholder="Score"
           type="number"
-          min="0"
         />
         <button onClick={handleAdd}>Add</button>
       </div>
@@ -54,11 +56,13 @@ export default function ScoreTracker({ participants, scores, addScore }: Props) 
         </thead>
         <tbody>
           {scores.map((score, index) => {
-            const participant = participants.find((p) => p.id === score.participantId);
+            const participant = participants.find(
+              (p) => p.id === score.participantId
+            );
             return (
               <tr key={index}>
-                <td>{participant?.game || "Unknown"}</td>
-                <td>{participant?.name || "Unknown"}</td>
+                <td>{participant?.game}</td>
+                <td>{participant?.name}</td>
                 <td>{score.points}</td>
               </tr>
             );
