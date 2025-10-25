@@ -17,7 +17,6 @@ const ParticipantTracker: React.FC = () => {
       setForm({ name: '', email: '', game: '' });
       setShowForm(false);
     } catch (err) {
-      // error handled in hook
     }
   };
 
