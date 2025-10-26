@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { eventService } from "../services/eventService";
+import { eventService } from "../services/eventpastService";
 import { EventItem } from "../types/EventItem";
 
 export function usePastEvents() {

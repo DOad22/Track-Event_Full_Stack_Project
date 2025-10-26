@@ -1,4 +1,4 @@
-import { eventRepository } from "../repositories/eventRepository";
+import { eventRepository } from "../repositories/eventpastRepository";
 import { EventItem } from "../types/EventItem";
 
 export const eventService = {
