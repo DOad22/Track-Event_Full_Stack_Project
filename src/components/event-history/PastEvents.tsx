@@ -1,5 +1,5 @@
-import "../../components/event-history/PastEvents.css";
 import React from "react";
+import "./PastEvents.css";
 import { usePastEvents } from "../../hooks/usePastEvents";
 
 interface PastEventsProps {
@@ -9,13 +9,9 @@ interface PastEventsProps {
 
 function PastEvents({ message, setMessage }: PastEventsProps) {
   const {
-    events,          
-    name,            
-    date,            
-    setName,         
-    setDate,         
-    addEvent,        
-    removeEvent,     
+    events, name, date, setName, setDate,
+    addEvent, removeEvent,
+    query, setQuery,             
   } = usePastEvents();
 
   return (
@@ -28,6 +24,15 @@ function PastEvents({ message, setMessage }: PastEventsProps) {
         placeholder="Type to change message..."
         onChange={(e) => setMessage(e.target.value)}
       />
+
+      <div className="pe-search">
+        <input
+          type="text"
+          placeholder="Search events..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+      </div>
 
       <div className="add-form">
         <input
