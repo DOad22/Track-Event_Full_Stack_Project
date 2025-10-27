@@ -1,28 +1,234 @@
-.participant-list {
-  padding: 1rem;
-  margin: 1rem auto;
-  max-width: 400px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  background: #f7a5a5;
+.participant-tracker {
+  max-width: 1000px;
+  margin: 2rem auto;
+  background: #ffffffbb;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #1f2937;
 }
 
-.participant-list h2 {
-  margin-bottom: 0.5rem;
-  font-size: 1.2rem;
+.participant-tracker h1 {
   text-align: center;
+  font-size: 2rem;
+  color: #2563eb;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.5px;
 }
 
-.participant-list ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.stats-grid-participant {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 
-.participant-list li {
+.stat-card-participant {
+  background: linear-gradient(135deg, #e0f2fe, #bfdbfe);
+  border-radius: 12px;
+  text-align: center;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card-participant:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 10px rgba(59, 130, 246, 0.25);
+}
+
+.stat-number {
+  font-size: 1.75rem;
+  font-weight: bold;
+}
+
+.stat-label {
+  color: #374151;
+  font-size: 0.9rem;
+}
+
+.add-participant-btn,
+.submit-participant-btn,
+.action-btn {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.15s ease;
+}
+
+.add-participant-btn:hover,
+.submit-participant-btn:hover,
+.action-btn:hover {
+  background: #1e40af;
+  transform: translateY(-2px);
+}
+
+.confirm-btn {
+  background: #16a34a;
+}
+
+.confirm-btn:hover {
+  background: #15803d;
+}
+
+.decline-btn {
+  background: #dc2626;
+}
+
+.decline-btn:hover {
+  background: #b91c1c;
+}
+
+.remove-btn {
+  background: #6b7280;
+}
+
+.remove-btn:hover {
+  background: #4b5563;
+}
+
+.participant-form {
+  background: #f9fafb;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  border: 1px solid #e5e7eb;
+}
+
+.participant-form h2 {
+  text-align: center;
+  color: #1e3a8a;
+  margin-bottom: 1rem;
+}
+
+.form-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.form-group-participant label {
+  font-weight: 600;
+  color: #374151;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.form-input-participant {
+  width: 100%;
   padding: 0.5rem;
-  margin-bottom: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background:#ffdbb6;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  transition: border-color 0.2s ease;
+}
+
+.form-input-participant:focus {
+  border-color: #2563eb;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+}
+
+.participants-list {
+  background: #f3f4f6;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.list-header {
+  font-weight: bold;
+  color: #1e3a8a;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.participant-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+  transition: box-shadow 0.2s ease;
+}
+
+.participant-item:hover {
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+.participant-info {
+  flex: 1;
+}
+
+.participant-name {
+  font-weight: 600;
+  color: #111827;
+}
+
+.participant-email {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.participant-game {
+  color: #2563eb;
+  font-size: 0.9rem;
+}
+
+.status-badge {
+  padding: 0.25rem 0.6rem;
+  border-radius: 12px;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-right: 0.5rem;
+  text-transform: capitalize;
+}
+
+.status-pending {
+  background: #facc15;
+  color: #78350f;
+}
+
+.status-confirmed {
+  background: #16a34a;
+}
+
+.status-declined {
+  background: #dc2626;
+}
+
+.loading,
+.error-message {
+  text-align: center;
+  margin: 1rem 0;
+  font-weight: 500;
+}
+
+.loading {
+  color: #2563eb;
+}
+
+.error-message {
+  color: #dc2626;
+}
+
+@media (max-width: 640px) {
+  .participant-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .participant-actions {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
 }
