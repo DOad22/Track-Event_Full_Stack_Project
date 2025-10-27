@@ -1,5 +1,5 @@
 import { Participant } from '../types/participant';
-import { participantTestData } from '../data/participantData';
+import { participantTestData } from '../Data/participantData';
 
 export class ParticipantRepository {
   
