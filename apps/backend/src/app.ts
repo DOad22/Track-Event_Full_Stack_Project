@@ -1,0 +1,20 @@
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import eventRoutes from "./api/v1/routes/event.routes";
+import { setupSwagger } from "../config/swagger"; 
+
+dotenv.config();
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+app.get("/", (_req, res) => {
+  res.send("Event Manager API is running successfully!");
+});
+
+app.use("/api/events", eventRoutes);
+setupSwagger(app);
+
+export default app;
