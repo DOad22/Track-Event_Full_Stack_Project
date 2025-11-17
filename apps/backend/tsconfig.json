@@ -9,11 +9,14 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+
+    "types": ["node"] 
   },
   "include": [
     "src/**/*",
     "prisma/client.ts",
-    "src/generated/prisma/**/*"
+    "src/generated/prisma/**/*",
+    "prisma/**/*"
   ]
 }
