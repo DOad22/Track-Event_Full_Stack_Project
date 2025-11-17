@@ -8,4 +8,3 @@ const corsOptions: CorsOptions = {
 };
  
 export default corsOptions;
- 
