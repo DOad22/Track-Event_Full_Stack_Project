@@ -1,29 +1,30 @@
 import { EventItem } from "../types/EventItem";
-import { pastEventsData } from "../data/pastEvents.testdata";
 
-let db: EventItem[] = [...pastEventsData];
+const API_BASE = "http://localhost:3000/api/past-events";
 
 export const eventRepository = {
-  getAll(): EventItem[] {
-    return [...db];
+  async getAll(): Promise<EventItem[]> {
+    const res = await fetch(API_BASE);
+    return res.json();
   },
-  create(item: Omit<EventItem, "id">): EventItem {
-    const newItem: EventItem = { id: Date.now(), ...item };
-    db = [...db, newItem];
-    return newItem;
-  },
-  remove(id: number): void {
-    db = db.filter(e => e.id !== id);
-  },
-  update(id: number, patch: Partial<Omit<EventItem, "id">>): EventItem | null {
-    let found: EventItem | null = null;
-    db = db.map(e => {
-      if (e.id === id) {
-        found = { ...e, ...patch };
-        return found!;
-      }
-      return e;
+
+  async create(item: Omit<EventItem, "id">): Promise<EventItem> {
+    const body = {
+      name: item.name,
+      date: item.date,
+    };
+
+    const res = await fetch(API_BASE, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
     });
-    return found;
+    return res.json();
+  },
+
+  async remove(id: number): Promise<void> {
+    await fetch(`${API_BASE}/${id}`, {
+      method: "DELETE",
+    });
   }
 };

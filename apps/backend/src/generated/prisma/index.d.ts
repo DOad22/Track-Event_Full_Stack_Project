@@ -18,6 +18,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  * 
  */
 export type Event = $Result.DefaultSelection<Prisma.$EventPayload>
+/**
+ * Model PastEvent
+ * 
+ */
+export type PastEvent = $Result.DefaultSelection<Prisma.$PastEventPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -146,6 +151,16 @@ export class PrismaClient<
     * ```
     */
   get event(): Prisma.EventDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.pastEvent`: Exposes CRUD operations for the **PastEvent** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PastEvents
+    * const pastEvents = await prisma.pastEvent.findMany()
+    * ```
+    */
+  get pastEvent(): Prisma.PastEventDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -587,7 +602,8 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    Event: 'Event'
+    Event: 'Event',
+    PastEvent: 'PastEvent'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -606,7 +622,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "event"
+      modelProps: "event" | "pastEvent"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -681,6 +697,80 @@ export namespace Prisma {
           count: {
             args: Prisma.EventCountArgs<ExtArgs>
             result: $Utils.Optional<EventCountAggregateOutputType> | number
+          }
+        }
+      }
+      PastEvent: {
+        payload: Prisma.$PastEventPayload<ExtArgs>
+        fields: Prisma.PastEventFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PastEventFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PastEventPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PastEventFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PastEventPayload>
+          }
+          findFirst: {
+            args: Prisma.PastEventFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PastEventPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PastEventFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PastEventPayload>
+          }
+          findMany: {
+            args: Prisma.PastEventFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PastEventPayload>[]
+          }
+          create: {
+            args: Prisma.PastEventCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PastEventPayload>
+          }
+          createMany: {
+            args: Prisma.PastEventCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PastEventCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PastEventPayload>[]
+          }
+          delete: {
+            args: Prisma.PastEventDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PastEventPayload>
+          }
+          update: {
+            args: Prisma.PastEventUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PastEventPayload>
+          }
+          deleteMany: {
+            args: Prisma.PastEventDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PastEventUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PastEventUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PastEventPayload>[]
+          }
+          upsert: {
+            args: Prisma.PastEventUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PastEventPayload>
+          }
+          aggregate: {
+            args: Prisma.PastEventAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePastEvent>
+          }
+          groupBy: {
+            args: Prisma.PastEventGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PastEventGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PastEventCountArgs<ExtArgs>
+            result: $Utils.Optional<PastEventCountAggregateOutputType> | number
           }
         }
       }
@@ -781,6 +871,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     event?: EventOmit
+    pastEvent?: PastEventOmit
   }
 
   /* Types for Logging */
@@ -1917,6 +2008,1048 @@ export namespace Prisma {
 
 
   /**
+   * Model PastEvent
+   */
+
+  export type AggregatePastEvent = {
+    _count: PastEventCountAggregateOutputType | null
+    _avg: PastEventAvgAggregateOutputType | null
+    _sum: PastEventSumAggregateOutputType | null
+    _min: PastEventMinAggregateOutputType | null
+    _max: PastEventMaxAggregateOutputType | null
+  }
+
+  export type PastEventAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type PastEventSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type PastEventMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    description: string | null
+    date: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PastEventMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    description: string | null
+    date: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PastEventCountAggregateOutputType = {
+    id: number
+    name: number
+    description: number
+    date: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PastEventAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type PastEventSumAggregateInputType = {
+    id?: true
+  }
+
+  export type PastEventMinAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    date?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PastEventMaxAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    date?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PastEventCountAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    date?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PastEventAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PastEvent to aggregate.
+     */
+    where?: PastEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PastEvents to fetch.
+     */
+    orderBy?: PastEventOrderByWithRelationInput | PastEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PastEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PastEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PastEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PastEvents
+    **/
+    _count?: true | PastEventCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PastEventAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PastEventSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PastEventMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PastEventMaxAggregateInputType
+  }
+
+  export type GetPastEventAggregateType<T extends PastEventAggregateArgs> = {
+        [P in keyof T & keyof AggregatePastEvent]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePastEvent[P]>
+      : GetScalarType<T[P], AggregatePastEvent[P]>
+  }
+
+
+
+
+  export type PastEventGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PastEventWhereInput
+    orderBy?: PastEventOrderByWithAggregationInput | PastEventOrderByWithAggregationInput[]
+    by: PastEventScalarFieldEnum[] | PastEventScalarFieldEnum
+    having?: PastEventScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PastEventCountAggregateInputType | true
+    _avg?: PastEventAvgAggregateInputType
+    _sum?: PastEventSumAggregateInputType
+    _min?: PastEventMinAggregateInputType
+    _max?: PastEventMaxAggregateInputType
+  }
+
+  export type PastEventGroupByOutputType = {
+    id: number
+    name: string
+    description: string | null
+    date: Date
+    createdAt: Date
+    updatedAt: Date
+    _count: PastEventCountAggregateOutputType | null
+    _avg: PastEventAvgAggregateOutputType | null
+    _sum: PastEventSumAggregateOutputType | null
+    _min: PastEventMinAggregateOutputType | null
+    _max: PastEventMaxAggregateOutputType | null
+  }
+
+  type GetPastEventGroupByPayload<T extends PastEventGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PastEventGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PastEventGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PastEventGroupByOutputType[P]>
+            : GetScalarType<T[P], PastEventGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PastEventSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    date?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["pastEvent"]>
+
+  export type PastEventSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    date?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["pastEvent"]>
+
+  export type PastEventSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    date?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["pastEvent"]>
+
+  export type PastEventSelectScalar = {
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    date?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type PastEventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "date" | "createdAt" | "updatedAt", ExtArgs["result"]["pastEvent"]>
+
+  export type $PastEventPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PastEvent"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string
+      description: string | null
+      date: Date
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["pastEvent"]>
+    composites: {}
+  }
+
+  type PastEventGetPayload<S extends boolean | null | undefined | PastEventDefaultArgs> = $Result.GetResult<Prisma.$PastEventPayload, S>
+
+  type PastEventCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PastEventFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PastEventCountAggregateInputType | true
+    }
+
+  export interface PastEventDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PastEvent'], meta: { name: 'PastEvent' } }
+    /**
+     * Find zero or one PastEvent that matches the filter.
+     * @param {PastEventFindUniqueArgs} args - Arguments to find a PastEvent
+     * @example
+     * // Get one PastEvent
+     * const pastEvent = await prisma.pastEvent.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PastEventFindUniqueArgs>(args: SelectSubset<T, PastEventFindUniqueArgs<ExtArgs>>): Prisma__PastEventClient<$Result.GetResult<Prisma.$PastEventPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PastEvent that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PastEventFindUniqueOrThrowArgs} args - Arguments to find a PastEvent
+     * @example
+     * // Get one PastEvent
+     * const pastEvent = await prisma.pastEvent.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PastEventFindUniqueOrThrowArgs>(args: SelectSubset<T, PastEventFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PastEventClient<$Result.GetResult<Prisma.$PastEventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PastEvent that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PastEventFindFirstArgs} args - Arguments to find a PastEvent
+     * @example
+     * // Get one PastEvent
+     * const pastEvent = await prisma.pastEvent.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PastEventFindFirstArgs>(args?: SelectSubset<T, PastEventFindFirstArgs<ExtArgs>>): Prisma__PastEventClient<$Result.GetResult<Prisma.$PastEventPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PastEvent that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PastEventFindFirstOrThrowArgs} args - Arguments to find a PastEvent
+     * @example
+     * // Get one PastEvent
+     * const pastEvent = await prisma.pastEvent.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PastEventFindFirstOrThrowArgs>(args?: SelectSubset<T, PastEventFindFirstOrThrowArgs<ExtArgs>>): Prisma__PastEventClient<$Result.GetResult<Prisma.$PastEventPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PastEvents that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PastEventFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PastEvents
+     * const pastEvents = await prisma.pastEvent.findMany()
+     * 
+     * // Get first 10 PastEvents
+     * const pastEvents = await prisma.pastEvent.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const pastEventWithIdOnly = await prisma.pastEvent.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PastEventFindManyArgs>(args?: SelectSubset<T, PastEventFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PastEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PastEvent.
+     * @param {PastEventCreateArgs} args - Arguments to create a PastEvent.
+     * @example
+     * // Create one PastEvent
+     * const PastEvent = await prisma.pastEvent.create({
+     *   data: {
+     *     // ... data to create a PastEvent
+     *   }
+     * })
+     * 
+     */
+    create<T extends PastEventCreateArgs>(args: SelectSubset<T, PastEventCreateArgs<ExtArgs>>): Prisma__PastEventClient<$Result.GetResult<Prisma.$PastEventPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PastEvents.
+     * @param {PastEventCreateManyArgs} args - Arguments to create many PastEvents.
+     * @example
+     * // Create many PastEvents
+     * const pastEvent = await prisma.pastEvent.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PastEventCreateManyArgs>(args?: SelectSubset<T, PastEventCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PastEvents and returns the data saved in the database.
+     * @param {PastEventCreateManyAndReturnArgs} args - Arguments to create many PastEvents.
+     * @example
+     * // Create many PastEvents
+     * const pastEvent = await prisma.pastEvent.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PastEvents and only return the `id`
+     * const pastEventWithIdOnly = await prisma.pastEvent.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PastEventCreateManyAndReturnArgs>(args?: SelectSubset<T, PastEventCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PastEventPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a PastEvent.
+     * @param {PastEventDeleteArgs} args - Arguments to delete one PastEvent.
+     * @example
+     * // Delete one PastEvent
+     * const PastEvent = await prisma.pastEvent.delete({
+     *   where: {
+     *     // ... filter to delete one PastEvent
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PastEventDeleteArgs>(args: SelectSubset<T, PastEventDeleteArgs<ExtArgs>>): Prisma__PastEventClient<$Result.GetResult<Prisma.$PastEventPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PastEvent.
+     * @param {PastEventUpdateArgs} args - Arguments to update one PastEvent.
+     * @example
+     * // Update one PastEvent
+     * const pastEvent = await prisma.pastEvent.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PastEventUpdateArgs>(args: SelectSubset<T, PastEventUpdateArgs<ExtArgs>>): Prisma__PastEventClient<$Result.GetResult<Prisma.$PastEventPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PastEvents.
+     * @param {PastEventDeleteManyArgs} args - Arguments to filter PastEvents to delete.
+     * @example
+     * // Delete a few PastEvents
+     * const { count } = await prisma.pastEvent.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PastEventDeleteManyArgs>(args?: SelectSubset<T, PastEventDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PastEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PastEventUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PastEvents
+     * const pastEvent = await prisma.pastEvent.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PastEventUpdateManyArgs>(args: SelectSubset<T, PastEventUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PastEvents and returns the data updated in the database.
+     * @param {PastEventUpdateManyAndReturnArgs} args - Arguments to update many PastEvents.
+     * @example
+     * // Update many PastEvents
+     * const pastEvent = await prisma.pastEvent.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more PastEvents and only return the `id`
+     * const pastEventWithIdOnly = await prisma.pastEvent.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PastEventUpdateManyAndReturnArgs>(args: SelectSubset<T, PastEventUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PastEventPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one PastEvent.
+     * @param {PastEventUpsertArgs} args - Arguments to update or create a PastEvent.
+     * @example
+     * // Update or create a PastEvent
+     * const pastEvent = await prisma.pastEvent.upsert({
+     *   create: {
+     *     // ... data to create a PastEvent
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PastEvent we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PastEventUpsertArgs>(args: SelectSubset<T, PastEventUpsertArgs<ExtArgs>>): Prisma__PastEventClient<$Result.GetResult<Prisma.$PastEventPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PastEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PastEventCountArgs} args - Arguments to filter PastEvents to count.
+     * @example
+     * // Count the number of PastEvents
+     * const count = await prisma.pastEvent.count({
+     *   where: {
+     *     // ... the filter for the PastEvents we want to count
+     *   }
+     * })
+    **/
+    count<T extends PastEventCountArgs>(
+      args?: Subset<T, PastEventCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PastEventCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PastEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PastEventAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PastEventAggregateArgs>(args: Subset<T, PastEventAggregateArgs>): Prisma.PrismaPromise<GetPastEventAggregateType<T>>
+
+    /**
+     * Group by PastEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PastEventGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PastEventGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PastEventGroupByArgs['orderBy'] }
+        : { orderBy?: PastEventGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PastEventGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPastEventGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PastEvent model
+   */
+  readonly fields: PastEventFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PastEvent.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PastEventClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PastEvent model
+   */
+  interface PastEventFieldRefs {
+    readonly id: FieldRef<"PastEvent", 'Int'>
+    readonly name: FieldRef<"PastEvent", 'String'>
+    readonly description: FieldRef<"PastEvent", 'String'>
+    readonly date: FieldRef<"PastEvent", 'DateTime'>
+    readonly createdAt: FieldRef<"PastEvent", 'DateTime'>
+    readonly updatedAt: FieldRef<"PastEvent", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PastEvent findUnique
+   */
+  export type PastEventFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PastEvent
+     */
+    select?: PastEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PastEvent
+     */
+    omit?: PastEventOmit<ExtArgs> | null
+    /**
+     * Filter, which PastEvent to fetch.
+     */
+    where: PastEventWhereUniqueInput
+  }
+
+  /**
+   * PastEvent findUniqueOrThrow
+   */
+  export type PastEventFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PastEvent
+     */
+    select?: PastEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PastEvent
+     */
+    omit?: PastEventOmit<ExtArgs> | null
+    /**
+     * Filter, which PastEvent to fetch.
+     */
+    where: PastEventWhereUniqueInput
+  }
+
+  /**
+   * PastEvent findFirst
+   */
+  export type PastEventFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PastEvent
+     */
+    select?: PastEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PastEvent
+     */
+    omit?: PastEventOmit<ExtArgs> | null
+    /**
+     * Filter, which PastEvent to fetch.
+     */
+    where?: PastEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PastEvents to fetch.
+     */
+    orderBy?: PastEventOrderByWithRelationInput | PastEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PastEvents.
+     */
+    cursor?: PastEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PastEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PastEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PastEvents.
+     */
+    distinct?: PastEventScalarFieldEnum | PastEventScalarFieldEnum[]
+  }
+
+  /**
+   * PastEvent findFirstOrThrow
+   */
+  export type PastEventFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PastEvent
+     */
+    select?: PastEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PastEvent
+     */
+    omit?: PastEventOmit<ExtArgs> | null
+    /**
+     * Filter, which PastEvent to fetch.
+     */
+    where?: PastEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PastEvents to fetch.
+     */
+    orderBy?: PastEventOrderByWithRelationInput | PastEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PastEvents.
+     */
+    cursor?: PastEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PastEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PastEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PastEvents.
+     */
+    distinct?: PastEventScalarFieldEnum | PastEventScalarFieldEnum[]
+  }
+
+  /**
+   * PastEvent findMany
+   */
+  export type PastEventFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PastEvent
+     */
+    select?: PastEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PastEvent
+     */
+    omit?: PastEventOmit<ExtArgs> | null
+    /**
+     * Filter, which PastEvents to fetch.
+     */
+    where?: PastEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PastEvents to fetch.
+     */
+    orderBy?: PastEventOrderByWithRelationInput | PastEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PastEvents.
+     */
+    cursor?: PastEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PastEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PastEvents.
+     */
+    skip?: number
+    distinct?: PastEventScalarFieldEnum | PastEventScalarFieldEnum[]
+  }
+
+  /**
+   * PastEvent create
+   */
+  export type PastEventCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PastEvent
+     */
+    select?: PastEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PastEvent
+     */
+    omit?: PastEventOmit<ExtArgs> | null
+    /**
+     * The data needed to create a PastEvent.
+     */
+    data: XOR<PastEventCreateInput, PastEventUncheckedCreateInput>
+  }
+
+  /**
+   * PastEvent createMany
+   */
+  export type PastEventCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PastEvents.
+     */
+    data: PastEventCreateManyInput | PastEventCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PastEvent createManyAndReturn
+   */
+  export type PastEventCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PastEvent
+     */
+    select?: PastEventSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PastEvent
+     */
+    omit?: PastEventOmit<ExtArgs> | null
+    /**
+     * The data used to create many PastEvents.
+     */
+    data: PastEventCreateManyInput | PastEventCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PastEvent update
+   */
+  export type PastEventUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PastEvent
+     */
+    select?: PastEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PastEvent
+     */
+    omit?: PastEventOmit<ExtArgs> | null
+    /**
+     * The data needed to update a PastEvent.
+     */
+    data: XOR<PastEventUpdateInput, PastEventUncheckedUpdateInput>
+    /**
+     * Choose, which PastEvent to update.
+     */
+    where: PastEventWhereUniqueInput
+  }
+
+  /**
+   * PastEvent updateMany
+   */
+  export type PastEventUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PastEvents.
+     */
+    data: XOR<PastEventUpdateManyMutationInput, PastEventUncheckedUpdateManyInput>
+    /**
+     * Filter which PastEvents to update
+     */
+    where?: PastEventWhereInput
+    /**
+     * Limit how many PastEvents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PastEvent updateManyAndReturn
+   */
+  export type PastEventUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PastEvent
+     */
+    select?: PastEventSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PastEvent
+     */
+    omit?: PastEventOmit<ExtArgs> | null
+    /**
+     * The data used to update PastEvents.
+     */
+    data: XOR<PastEventUpdateManyMutationInput, PastEventUncheckedUpdateManyInput>
+    /**
+     * Filter which PastEvents to update
+     */
+    where?: PastEventWhereInput
+    /**
+     * Limit how many PastEvents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PastEvent upsert
+   */
+  export type PastEventUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PastEvent
+     */
+    select?: PastEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PastEvent
+     */
+    omit?: PastEventOmit<ExtArgs> | null
+    /**
+     * The filter to search for the PastEvent to update in case it exists.
+     */
+    where: PastEventWhereUniqueInput
+    /**
+     * In case the PastEvent found by the `where` argument doesn't exist, create a new PastEvent with this data.
+     */
+    create: XOR<PastEventCreateInput, PastEventUncheckedCreateInput>
+    /**
+     * In case the PastEvent was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PastEventUpdateInput, PastEventUncheckedUpdateInput>
+  }
+
+  /**
+   * PastEvent delete
+   */
+  export type PastEventDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PastEvent
+     */
+    select?: PastEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PastEvent
+     */
+    omit?: PastEventOmit<ExtArgs> | null
+    /**
+     * Filter which PastEvent to delete.
+     */
+    where: PastEventWhereUniqueInput
+  }
+
+  /**
+   * PastEvent deleteMany
+   */
+  export type PastEventDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PastEvents to delete
+     */
+    where?: PastEventWhereInput
+    /**
+     * Limit how many PastEvents to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PastEvent without action
+   */
+  export type PastEventDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PastEvent
+     */
+    select?: PastEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PastEvent
+     */
+    omit?: PastEventOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -1941,6 +3074,18 @@ export namespace Prisma {
   };
 
   export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
+
+
+  export const PastEventScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    date: 'date',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type PastEventScalarFieldEnum = (typeof PastEventScalarFieldEnum)[keyof typeof PastEventScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -2095,6 +3240,65 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Event"> | Date | string
   }
 
+  export type PastEventWhereInput = {
+    AND?: PastEventWhereInput | PastEventWhereInput[]
+    OR?: PastEventWhereInput[]
+    NOT?: PastEventWhereInput | PastEventWhereInput[]
+    id?: IntFilter<"PastEvent"> | number
+    name?: StringFilter<"PastEvent"> | string
+    description?: StringNullableFilter<"PastEvent"> | string | null
+    date?: DateTimeFilter<"PastEvent"> | Date | string
+    createdAt?: DateTimeFilter<"PastEvent"> | Date | string
+    updatedAt?: DateTimeFilter<"PastEvent"> | Date | string
+  }
+
+  export type PastEventOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    date?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PastEventWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: PastEventWhereInput | PastEventWhereInput[]
+    OR?: PastEventWhereInput[]
+    NOT?: PastEventWhereInput | PastEventWhereInput[]
+    name?: StringFilter<"PastEvent"> | string
+    description?: StringNullableFilter<"PastEvent"> | string | null
+    date?: DateTimeFilter<"PastEvent"> | Date | string
+    createdAt?: DateTimeFilter<"PastEvent"> | Date | string
+    updatedAt?: DateTimeFilter<"PastEvent"> | Date | string
+  }, "id">
+
+  export type PastEventOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    date?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: PastEventCountOrderByAggregateInput
+    _avg?: PastEventAvgOrderByAggregateInput
+    _max?: PastEventMaxOrderByAggregateInput
+    _min?: PastEventMinOrderByAggregateInput
+    _sum?: PastEventSumOrderByAggregateInput
+  }
+
+  export type PastEventScalarWhereWithAggregatesInput = {
+    AND?: PastEventScalarWhereWithAggregatesInput | PastEventScalarWhereWithAggregatesInput[]
+    OR?: PastEventScalarWhereWithAggregatesInput[]
+    NOT?: PastEventScalarWhereWithAggregatesInput | PastEventScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"PastEvent"> | number
+    name?: StringWithAggregatesFilter<"PastEvent"> | string
+    description?: StringNullableWithAggregatesFilter<"PastEvent"> | string | null
+    date?: DateTimeWithAggregatesFilter<"PastEvent"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"PastEvent"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"PastEvent"> | Date | string
+  }
+
   export type EventCreateInput = {
     title: string
     description?: string | null
@@ -2158,6 +3362,66 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PastEventCreateInput = {
+    name: string
+    description?: string | null
+    date: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PastEventUncheckedCreateInput = {
+    id?: number
+    name: string
+    description?: string | null
+    date: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PastEventUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PastEventUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PastEventCreateManyInput = {
+    id?: number
+    name: string
+    description?: string | null
+    date: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PastEventUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PastEventUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2321,6 +3585,41 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type PastEventCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    date?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PastEventAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type PastEventMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    date?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PastEventMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    date?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PastEventSumOrderByAggregateInput = {
+    id?: SortOrder
   }
 
   export type StringFieldUpdateOperationsInput = {
