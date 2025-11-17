@@ -1,4 +1,4 @@
-import testEvents from "../data/testEvents";
+import testEvents from "../Data/testEvents";
 
 export interface Event {
   id: number;

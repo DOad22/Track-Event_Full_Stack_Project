@@ -1,4 +1,4 @@
-import { useParticipants } from "../hooks/useParticipants";
+import { useParticipants } from "./useParticipants";
 import { Participant as ExternalParticipant } from "../types/participant";
 import { Participant as ScoreParticipant } from "../types";
 

@@ -1,5 +1,5 @@
 import { EventItem } from "../types/EventItem";
-import { pastEventsData } from "../data/pastEvents.testdata";
+import { pastEventsData } from "../Data/pastEvents.testdata";
 
 let db: EventItem[] = [...pastEventsData];
 
