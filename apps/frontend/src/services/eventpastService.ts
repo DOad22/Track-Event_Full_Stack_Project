@@ -2,17 +2,28 @@ import { eventRepository } from "../repositories/eventpastRepository";
 import { EventItem } from "../types/EventItem";
 
 export const eventService = {
-  list(): EventItem[] {
-    return eventRepository.getAll();
+  async list(): Promise<EventItem[]> {
+    const events = await eventRepository.getAll();
+    return events;
   },
-  add(name: string, date: string): EventItem | null {
-    if (!name.trim() || !date) return null; 
-    return eventRepository.create({ name: name.trim(), date });
+
+  async add(name: string, date: string): Promise<EventItem | null> {
+    if (!name.trim() || !date) return null;
+
+    const created = await eventRepository.create({
+      name: name.trim(),
+      date,
+    });
+
+    return created;
   },
-  remove(id: number): void {
-    eventRepository.remove(id);
+
+  async remove(id: number): Promise<void> {
+    await eventRepository.remove(id);
   },
-  listSortedByDate(): EventItem[] {
-    return eventRepository.getAll().sort((a, b) => a.date.localeCompare(b.date));
-  }
+
+  async listSortedByDate(): Promise<EventItem[]> {
+    const events = await eventRepository.getAll();
+    return events.sort((a, b) => a.date.localeCompare(b.date));
+  },
 };
