@@ -1,5 +1,5 @@
 import { Score } from "../types";
-import { scoresData } from "../Data/scoresData";
+import { scoresData } from "../data/scoresData";
 
 
 let scores: Score[] = [...scoresData];
