@@ -1,6 +1,6 @@
-import { useState } from "react";
 import "./score.css";
 import { useScores } from "../../hooks/useScores";
+import { useScoreForm } from "../../hooks/useScoreForm"; 
 import { Participant } from "../../types";
 
 interface Props {
@@ -9,16 +9,7 @@ interface Props {
 
 export default function ScoreTracker({ participants }: Props) {
   const { scores, addScore } = useScores();
-  const [selectedId, setSelectedId] = useState("");
-  const [points, setPoints] = useState("");
-
-  const handleAdd = () => {
-    if (selectedId && points) {
-      addScore(Number(selectedId), Number(points));
-      setSelectedId("");
-      setPoints("");
-    }
-  };
+  const { selectedId, setSelectedId, points, setPoints, handleAdd } = useScoreForm(addScore);
 
   return (
     <section className="score-tracking">

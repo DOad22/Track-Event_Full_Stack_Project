@@ -6,7 +6,7 @@ import eventRoutes from "./api/v1/routes/event.routes";
 import pastEventsRoutes from "./api/v1/routes/pastEvents.routes";
 import { setupSwagger } from "../config/swagger"; 
 import { pastEventsErrorHandler } from "./api/v1/middleware/pastevents.errorHandler";
-
+import scoreRoutes from "./api/v1/routes/scoreRoutes";
 
 dotenv.config();
 
@@ -23,6 +23,12 @@ app.get("/", (_req, res) => {
   res.send("Backend is running");
 });
 
+app.use((err: any, _req: any, res: any, _next: any) => {
+  console.error("Server Error:", err.message);
+  res.status(500).json({ error: "Internal Server Error" });
+});
+
+app.use("/api/v1/scores", scoreRoutes);
 app.use("/api/v1/participants", participantRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/past-events", pastEventsRoutes);

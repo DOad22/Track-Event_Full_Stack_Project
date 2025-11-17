@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { eventService } from "../services/eventpastService";
 import { EventItem } from "../types/EventItem";
 

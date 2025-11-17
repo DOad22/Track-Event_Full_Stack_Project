@@ -12,18 +12,20 @@ async function main() {
     await prisma.participant.create({
       data: p
     });
+
+  await prisma.score.deleteMany();
+
+  await prisma.score.createMany({
+  data: participants.map((p) => ({
+    player: p.name,
+    points: 0 
+  })),
+  skipDuplicates: true
+});
+
   }
 
-  console.log(" Seed complete!");
-}
-
-main()
-  .catch((e) => console.error(e))
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
-
-    await prisma.event.deleteMany();
+  await prisma.event.deleteMany();
 
     await prisma.event.createMany({
         data: [
@@ -48,13 +50,12 @@ main()
         ],
     });
 
-    console.log('Seed data inserted successfully!');
+  console.log(" Seed complete!");
 }
 
 main()
-    .catch((error) => {
-        console.error('Error seeding data:', error);   
-    })
-    .finally(async () => {
-        await prisma.$disconnect();
-    });
+  .catch((e) => console.error(e))
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
+
