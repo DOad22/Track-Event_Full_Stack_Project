@@ -52,7 +52,7 @@ function PastEvents({ message, setMessage }: PastEventsProps) {
       <ul>
         {events.map((event) => (
           <li key={event.id}>
-            <strong>{event.name}</strong> — {event.date}
+            <strong>{event.name}</strong> — {event.date.split("T")[0]}
             <button onClick={() => removeEvent(event.id)}>Remove</button>
           </li>
         ))}

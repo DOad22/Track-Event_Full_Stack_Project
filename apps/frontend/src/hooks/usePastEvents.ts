@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
-import { eventService } from "../services/eventpastService";
+import { eventRepository } from "../repositories/eventpastRepository";
 import { EventItem } from "../types/EventItem";
 
 export function usePastEvents() {
@@ -9,37 +9,41 @@ export function usePastEvents() {
   const [query, setQuery] = useState("");
 
   useEffect(() => {
-    async function load() {
-      const all = await eventService.list();
-      setEvents(all);
-    }
-    load();
+    loadEvents();
   }, []);
+
+  const loadEvents = async () => {
+    const data = await eventRepository.getAll();
+    setEvents(data);
+  };
 
   const addEvent = async () => {
     if (!name.trim() || !date) return;
 
-    const created = await eventService.add(name, date);
-    if (!created) return;
+    const created = await eventRepository.create({
+      name: name.trim(),
+      date,
+    });
 
-    const sorted = await eventService.listSortedByDate();
-    setEvents(sorted);
+    if (!created) return; 
 
+    await loadEvents();
     setName("");
     setDate("");
   };
 
   const removeEvent = async (id: number) => {
-    await eventService.remove(id);
-
-    const updated = await eventService.list();
-    setEvents(updated);
+    await eventRepository.remove(id);
+    await loadEvents();
   };
 
   const filteredEvents = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return events;
-    return events.filter((e) => e.name.toLowerCase().includes(q));
+
+    return events.filter((e) =>
+      e.name.toLowerCase().includes(q)
+    );
   }, [events, query]);
 
   return {

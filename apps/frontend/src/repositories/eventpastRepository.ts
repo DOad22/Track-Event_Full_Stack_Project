@@ -8,10 +8,12 @@ export const eventRepository = {
     return res.json();
   },
 
-  async create(item: Omit<EventItem, "id">): Promise<EventItem> {
+  async create(item: Omit<EventItem, "id">): Promise<EventItem | null> {
+    const isoDate = new Date(item.date + "T00:00:00Z").toISOString();
+
     const body = {
       name: item.name,
-      date: item.date,
+      date: isoDate,
     };
 
     const res = await fetch(API_BASE, {
@@ -19,6 +21,13 @@ export const eventRepository = {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
+
+    if (!res.ok) {
+      const err = await res.json();
+      console.error("Create Error:", err);
+      return null;
+    }
+
     return res.json();
   },
 
@@ -26,5 +35,5 @@ export const eventRepository = {
     await fetch(`${API_BASE}/${id}`, {
       method: "DELETE",
     });
-  }
+  },
 };
