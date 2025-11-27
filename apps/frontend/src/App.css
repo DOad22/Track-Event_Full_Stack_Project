@@ -57,21 +57,31 @@ main {
 
 nav {
   display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 0.5rem;
+  justify-content: center; 
+  gap: 1.5rem;            
+  margin: 1rem 0;          
+  background-color: #f0f0f0;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
 }
+
 
 nav a {
-  color: var(--color-text-light);
   text-decoration: none;
+  color: #333;
   font-weight: bold;
-  transition: color 0.3s ease;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background-color 0.2s;
 }
 
+
 nav a:hover {
-  color: var(--color-secondary);
+  background-color: #5d688a;
+  color: white;
 }
+
+
 
 .text-center {
   text-align: center;
