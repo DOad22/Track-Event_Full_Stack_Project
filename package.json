@@ -1,0 +1,17 @@
+{
+  "name": "track-event-full-stack-project",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/backend",
+    "apps/frontend"
+  ],
+  "scripts": {
+    "start": "concurrently \"npm run start --workspace=apps/backend\" \"npm run dev --workspace=apps/frontend\"",
+    "start:backend": "npm run start --workspace=apps/backend",
+    "start:frontend": "npm run dev --workspace=apps/frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

@@ -16,7 +16,7 @@ async function main() {
   await prisma.score.deleteMany();
 
   await prisma.score.createMany({
-  data: participants.map((p) => ({
+  data: participants.map((p: { name: any; }) => ({
     player: p.name,
     points: 0 
   })),
