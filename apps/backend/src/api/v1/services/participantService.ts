@@ -1,4 +1,6 @@
-import { participants } from "../../../../prisma/seedData";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export interface ParticipantData {
   name: string;
@@ -6,35 +8,34 @@ export interface ParticipantData {
 }
 
 export async function listParticipants() {
-  // Return most recent first
-  return [...participants].reverse();
+  return prisma.participant.findMany({
+    orderBy: { id: "desc" }
+  });
 }
 
 export async function findParticipant(id: number) {
-  const participant = participants.find(p => p.id === id);
-  return participant || null;
+  return prisma.participant.findUnique({
+    where: { id }
+  });
 }
 
 export async function createParticipantService(data: ParticipantData) {
-  // Assign next ID
-  const newId = participants.length ? participants[participants.length - 1].id + 1 : 1;
-  const newParticipant = { id: newId, ...data };
-  participants.push(newParticipant);
-  return newParticipant;
+  return prisma.participant.create({
+    data
+  });
 }
 
-export async function updateParticipantService(id: number, data: ParticipantData) {
-  const participant = participants.find(p => p.id === id);
-  if (!participant) return null;
-
-  Object.assign(participant, data);
-  return participant;
+export async function updateParticipantService(id: number, data: any) {
+  return prisma.participant.update({
+    where: { id },
+    data
+  });
 }
 
 export async function deleteParticipantService(id: number) {
-  const index = participants.findIndex(p => p.id === id);
-  if (index === -1) return null;
+  await prisma.participant.delete({
+    where: { id }
+  });
 
-  participants.splice(index, 1);
   return { message: "Deleted successfully" };
 }
