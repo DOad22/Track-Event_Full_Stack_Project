@@ -1,10 +1,10 @@
 import { Participant } from '../types/participant';
-import { participantTestData } from '../Data/participantData';
+import { participantTestData } from '../data/participantData';
 
 export class ParticipantRepository {
 
   async getAllParticipants(): Promise<Participant[]> {
-    return [...participantTestData]; // return a copy
+    return [...participantTestData]; 
   }
 
   async getParticipantsByGame(game: string): Promise<Participant[]> {
