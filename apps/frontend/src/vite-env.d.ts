@@ -7,3 +7,15 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+import "express";
+
+declare module "express-serve-static-core" {
+  interface Request {
+    user?: {
+      id: string;
+      email?: string;
+      [key: string]: any;
+    };
+  }
+}
