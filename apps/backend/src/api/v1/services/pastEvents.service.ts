@@ -1,16 +1,29 @@
-import prisma from "../../../../prisma/client";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 
 export const pastEventsService = {
-  getAll: async () => {
-    return await prisma.pastEvent.findMany();
+  getAll: async (userId?: string | null) => {
+    if (!userId) {
+      return [];
+    }
+
+    return await prisma.pastEvent.findMany({
+      where: { userId: userId },
+      orderBy: { date: "desc" },
+    });
   },
 
   getById: async (id: number) => {
     return await prisma.pastEvent.findUnique({ where: { id } });
   },
 
-  create: async (data: any) => {
-    return await prisma.pastEvent.create({ data });
+  create: async (data: any, userId: string) => {
+    return await prisma.pastEvent.create({
+      data: {
+        ...data,
+        userId,
+      },
+    });
   },
 
   update: async (id: number, data: any) => {
