@@ -1,6 +1,7 @@
 import express from "express";
 import { pastEventController } from "../controllers/pastEvents.controller";
 import { validatePastEvent } from "../validators/pastEvents.validator";
+import { requireAuth } from "@clerk/express"; 
 
 const router = express.Router();
 
@@ -42,7 +43,7 @@ router.get("/", pastEventController.getAll);
  *       404:
  *         description: Past event not found
  */
-router.get("/:id", pastEventController.getById);
+router.get("/:id", pastEventController.getById);  
 
 /**
  * @swagger
@@ -76,7 +77,7 @@ router.get("/:id", pastEventController.getById);
  *       400:
  *         description: Validation error
  */
-router.post("/", validatePastEvent, pastEventController.create);
+router.post("/", requireAuth(), validatePastEvent, pastEventController.create);  
 
 /**
  * @swagger
@@ -111,7 +112,7 @@ router.post("/", validatePastEvent, pastEventController.create);
  *       404:
  *         description: Event not found
  */
-router.put("/:id", validatePastEvent, pastEventController.update);
+router.put("/:id", validatePastEvent, pastEventController.update); 
 
 /**
  * @swagger
@@ -132,6 +133,6 @@ router.put("/:id", validatePastEvent, pastEventController.update);
  *       404:
  *         description: Event not found
  */
-router.delete("/:id", pastEventController.delete);
+router.delete("/:id", pastEventController.delete); 
 
 export default router;
