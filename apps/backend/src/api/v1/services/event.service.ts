@@ -1,24 +1,27 @@
 import { PrismaClient } from "@prisma/client";
+
 const prisma = new PrismaClient();
 
 export const eventService = {
-  getAll: async () => {
-    return await prisma.event.findMany();
-  },
+  getAll: async () => prisma.event.findMany({ orderBy: { date: "asc" } }),
 
-  getById: async (id: number) => {
-    return await prisma.event.findUnique({ where: { id } });
-  },
+  getById: async (id: number) => prisma.event.findUnique({ where: { id } }),
 
-  create: async (data: any) => {
-    return await prisma.event.create({ data });
-  },
+  create: async (data: { title: string; date: string; location?: string; userId: number; tags?: string[] }) =>
+    prisma.event.create({ data }),
 
-  update: async (id: number, data: any) => {
-    return await prisma.event.update({ where: { id }, data });
-  },
+  update: async (id: number, data: Partial<{ title: string; date: string; location: string; tags: string[] }>) =>
+    prisma.event.update({ where: { id }, data }),
 
-  delete: async (id: number) => {
-    return await prisma.event.delete({ where: { id } });
+  delete: async (id: number) => prisma.event.delete({ where: { id } }),
+
+  getPersonalized: async (userId: number) => {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) return [];
+
+    return prisma.event.findMany({
+      where: { userId },
+      orderBy: { date: "asc" },
+    });
   },
 };
