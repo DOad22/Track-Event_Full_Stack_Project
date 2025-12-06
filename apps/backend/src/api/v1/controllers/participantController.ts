@@ -5,11 +5,20 @@ import {
   createParticipantService,
   updateParticipantService,
   deleteParticipantService,
+  ParticipantData,
 } from "../services/participantService";
 
+// Clerk import
+import { getAuth } from "@clerk/express";
+
+// Get all participants for logged-in user
 export async function getParticipants(req: Request, res: Response) {
   try {
-    const data = await listParticipants();
+    const { userId } = getAuth(req);
+
+    if (!userId) return res.json([]); 
+
+    const data = await listParticipants(userId);
     res.json(data);
   } catch (err) {
     console.error("ERROR getParticipants:", err);
@@ -17,14 +26,17 @@ export async function getParticipants(req: Request, res: Response) {
   }
 }
 
+// Get a single participant
 export async function getParticipantById(req: Request, res: Response) {
   try {
     const id = Number(req.params.id);
-    const participant = await findParticipant(id);
+    const { userId } = getAuth(req);
 
-    if (!participant) {
+    if (!userId) return res.status(401).json({ error: "Unauthorized" });
+
+    const participant = await findParticipant(id, userId);
+    if (!participant)
       return res.status(404).json({ error: "Participant not found" });
-    }
 
     res.json(participant);
   } catch (err) {
@@ -33,9 +45,15 @@ export async function getParticipantById(req: Request, res: Response) {
   }
 }
 
+// Create a new participant
 export async function createParticipant(req: Request, res: Response) {
   try {
-    const newParticipant = await createParticipantService(req.body);
+    const { userId } = getAuth(req);
+    if (!userId) return res.status(401).json({ error: "Unauthorized" });
+
+    const data: ParticipantData = { ...req.body, userId };
+    const newParticipant = await createParticipantService(data);
+
     res.status(201).json(newParticipant);
   } catch (err) {
     console.error("ERROR createParticipant:", err);
@@ -43,14 +61,17 @@ export async function createParticipant(req: Request, res: Response) {
   }
 }
 
+// Update a participant
 export async function updateParticipant(req: Request, res: Response) {
   try {
     const id = Number(req.params.id);
-    const updated = await updateParticipantService(id, req.body);
+    const { userId } = getAuth(req);
 
-    if (!updated) {
+    if (!userId) return res.status(401).json({ error: "Unauthorized" });
+
+    const updated = await updateParticipantService(id, req.body, userId);
+    if (!updated)
       return res.status(404).json({ error: "Participant not found" });
-    }
 
     res.json(updated);
   } catch (err) {
@@ -59,14 +80,17 @@ export async function updateParticipant(req: Request, res: Response) {
   }
 }
 
+// Delete a participant
 export async function deleteParticipant(req: Request, res: Response) {
   try {
     const id = Number(req.params.id);
-    const deleted = await deleteParticipantService(id);
+    const { userId } = getAuth(req);
 
-    if (!deleted) {
+    if (!userId) return res.status(401).json({ error: "Unauthorized" });
+
+    const deleted = await deleteParticipantService(id, userId);
+    if (!deleted)
       return res.status(404).json({ error: "Participant not found" });
-    }
 
     res.json({ message: "Deleted successfully" });
   } catch (err) {

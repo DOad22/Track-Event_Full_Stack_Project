@@ -11,7 +11,7 @@ import Footer from "./Footer/footer";
 import { Score } from "./types";
 import { useParticipantBridge } from "./hooks/useParticipantBridge";
 
-import { SignIn, SignUp, UserButton, SignedIn, SignedOut } from "@clerk/clerk-react";
+import { SignIn, SignUp, UserButton, SignedIn, SignedOut, useAuth } from "@clerk/clerk-react";
 
 function App() {
   const [scores, setScores] = useState<Score[]>([]);
@@ -30,6 +30,23 @@ function App() {
     ]);
   };
 
+  const { getToken } = useAuth(); 
+
+  const fetchUserData = async () => {
+    try {
+      const token = await getToken();
+      const res = await fetch("http://localhost:3000/api/my-participants", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await res.json();
+      console.log("User participants:", data);
+    } catch (err) {
+      console.error("Error fetching user data:", err);
+    }
+  };
+
   return (
     <Router>
       <div className="app">
@@ -37,8 +54,8 @@ function App() {
           <h1>EventHub</h1>
           <div>
             <SignedOut>
-              <a href="/sign-in" style={{ marginRight: "1rem" }}>Sign In</a>
-              <a href="/sign-up">Sign Up</a>
+              <Link to="/sign-in" style={{ marginRight: "1rem" }}>Sign In</Link>
+              <Link to="/sign-up">Sign Up</Link>
             </SignedOut>
             <SignedIn>
               <UserButton />
@@ -46,6 +63,7 @@ function App() {
           </div>
         </header>
 
+        {/* Navigation for logged-in users */}
         <SignedIn>
           <nav style={{ padding: "0.5rem 1rem", display: "flex", gap: "1rem", backgroundColor: "#f0f0f0" }}>
             <Link to="/">Home</Link>
@@ -53,6 +71,7 @@ function App() {
             <Link to="/scores">Scores</Link>
             <Link to="/participants">Participants</Link>
             <Link to="/past">Past Events</Link>
+            <button onClick={fetchUserData} style={{ marginLeft: "auto" }}>Fetch My Data</button>
           </nav>
         </SignedIn>
 
