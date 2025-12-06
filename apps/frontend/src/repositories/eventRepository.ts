@@ -1,10 +1,14 @@
+import { ReactNode } from "react";
 import testEvents from "../data/testEvents";
 
 export interface Event {
+  title: ReactNode;
+  location: string;
   id: number;
   name: string;
   date: string;
   time: string;
+  tags?:string[];
 }
 
 let events: Event[] = [...testEvents]; 

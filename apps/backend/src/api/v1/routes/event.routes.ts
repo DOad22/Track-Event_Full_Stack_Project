@@ -25,6 +25,57 @@ router.get("/", eventController.getEvents);
 
 /**
  * @swagger
+ * /api/events/personalized:
+ *   get:
+ *     summary: Get personalized events for a user
+ *     tags: [Events]
+ *     parameters:
+ *       - in: query
+ *         name: userId
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: User ID
+ *         example: 13
+ *       - in: query
+ *         name: tags
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: Comma-separated list of tags for filtering events
+ *         example: games,fun
+ *     responses:
+ *       200:
+ *         description: List of personalized events
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                   title:
+ *                     type: string
+ *                   date:
+ *                     type: string
+ *                     format: date-time
+ *                   location:
+ *                     type: string
+ *                   tags:
+ *                     type: array
+ *                     items:
+ *                       type: string
+ *       400:
+ *         description: Invalid user ID
+ *       500:
+ *         description: Server error
+ */
+router.get("/personalized", eventController.getPersonalizedEvents);
+
+/**
+ * @swagger
  * /api/events:
  *   post:
  *     summary: Create a new event
@@ -43,11 +94,31 @@ router.get("/", eventController.getEvents);
  *               date:
  *                 type: string
  *                 format: date-time
+ *               location:
+ *                 type: string
+ *               tags:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               userId:
+ *                 type: integer
+ *             required:
+ *               - title
+ *               - date
+ *               - userId
+ *           example:
+ *             title: "Board Game Night"
+ *             description: "An evening to play and enjoy all types of board games."
+ *             date: "2025-12-05T19:07:08.394Z"
+ *             location: "Winnipeg Community Center"
+ *             tags: ["games", "fun", "friends"]
+ *             userId: 123
  *     responses:
  *       201:
  *         description: Event created successfully
  */
 router.post("/", validateEvent, eventController.createEvent);
+
 
 /**
  * @swagger
@@ -97,6 +168,12 @@ router.get("/:id", eventController.getEventById);
  *               date:
  *                 type: string
  *                 format: date-time
+ *               location:
+ *                 type: string
+ *               tags:
+ *                 type: array
+ *                 items:
+ *                   type: string
  *     responses:
  *       200:
  *         description: Event updated successfully

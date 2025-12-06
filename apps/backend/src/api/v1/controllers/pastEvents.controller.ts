@@ -2,14 +2,16 @@ import { Request, Response, NextFunction } from "express";
 import { pastEventsService } from "../services/pastEvents.service";
 
 export const pastEventController = {
-  getAll: async (_req: Request, res: Response, next: NextFunction) => {
-    try {
-      const events = await pastEventsService.getAll();
-      res.json(events);
-    } catch (error) {
-      next(error);
-    }
-  },
+  getAll: async (req: any, res: Response, next: NextFunction) => {
+  try {
+    const userId = req.auth?.userId || null; 
+    const events = await pastEventsService.getAll(userId);
+    res.json(events);
+  } catch (error) {
+    next(error);
+  }
+},
+
 
   getById: async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -26,14 +28,16 @@ export const pastEventController = {
     }
   },
 
-  create: async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const event = await pastEventsService.create(req.body);
-      res.status(201).json(event);
-    } catch (error) {
-      next(error);
-    }
-  },
+  create: async (req: any, res: Response, next: NextFunction) => {
+  try {
+    const userId = req.auth?.userId; 
+    const event = await pastEventsService.create(req.body, userId);
+    res.status(201).json(event);
+  } catch (error) {
+    next(error);
+  }
+},
+
 
   update: async (req: Request, res: Response, next: NextFunction) => {
     try {
