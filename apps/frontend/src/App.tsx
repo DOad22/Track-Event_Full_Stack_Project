@@ -8,27 +8,14 @@ import PastEvents from "./components/event-history/PastEvents";
 import ParticipantTracker from "./components/participant-manager/ParticipantList";
 import Footer from "./Footer/footer";
 
-import { Score } from "./types";
 import { useParticipantBridge } from "./hooks/useParticipantBridge";
 
 import { SignIn, SignUp, UserButton, SignedIn, SignedOut, useAuth } from "@clerk/clerk-react";
 
 function App() {
-  const [scores, setScores] = useState<Score[]>([]);
   const [message, setMessage] = useState("Welcome to EventHub!");
 
   const { participants, loading, error } = useParticipantBridge();
-
-  const addScore = (participantId: number, points: number) => {
-    setScores([
-      ...scores,
-      {
-        id: Date.now(),
-        participantId,
-        points,
-      },
-    ]);
-  };
 
   const { getToken } = useAuth(); 
 
@@ -81,6 +68,7 @@ function App() {
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="/" element={<h2>Welcome to EventHub!</h2>} />
             <Route path="/create" element={<EventCreator />} />
+
             <Route
               path="/scores"
               element={
@@ -93,8 +81,13 @@ function App() {
                 )
               }
             />
+
             <Route path="/participants" element={<ParticipantTracker />} />
-            <Route path="/past" element={<PastEvents message={message} setMessage={setMessage} />} />
+
+            <Route
+              path="/past"
+              element={<PastEvents message={message} setMessage={setMessage} />}
+            />
           </Routes>
         </main>
 

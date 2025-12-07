@@ -7,7 +7,7 @@ import pastEventsRoutes from "./api/v1/routes/pastEvents.routes";
 import { setupSwagger } from "../config/swagger"; 
 import { pastEventsErrorHandler } from "./api/v1/middleware/pastevents.errorHandler";
 import scoreRoutes from "./api/v1/routes/scoreRoutes";
-
+import { clerkMiddleware } from "@clerk/express";
 dotenv.config();
 
 const app = express();
@@ -18,6 +18,7 @@ app.use(
     origin: process.env.FRONTEND_URL || "http://localhost:5173",
   })
 );
+app.use(clerkMiddleware());
 
 app.get("/", (_req, res) => {
   res.send("Backend is running");
