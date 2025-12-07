@@ -10,6 +10,7 @@ import {
   validateCreateParticipant,
   validateUpdateParticipant,
 } from "../validations/participantValidator";
+import { requireAuth } from "@clerk/express";
 
 const router = express.Router();
 
@@ -30,7 +31,7 @@ const router = express.Router();
  *       200:
  *         description: List of all participants
  */
-router.get("/", getParticipants);
+router.get("/", requireAuth(), getParticipants);
 
 /**
  * @swagger
@@ -51,7 +52,7 @@ router.get("/", getParticipants);
  *       404:
  *         description: Participant not found
  */
-router.get("/:id", getParticipantById);
+router.get("/:id", requireAuth(), getParticipantById);
 
 /**
  * @swagger
@@ -72,6 +73,8 @@ router.get("/:id", getParticipantById);
  *                 type: string
  *               age:
  *                 type: number
+ *               idNo: 
+ *                   type: string
  *             required:
  *               - name
  *               - email
@@ -81,7 +84,7 @@ router.get("/:id", getParticipantById);
  *       400:
  *         description: Validation error
  */
-router.post("/", validateCreateParticipant, createParticipant);
+router.post("/", requireAuth(), validateCreateParticipant, createParticipant);
 
 /**
  * @swagger
@@ -117,7 +120,7 @@ router.post("/", validateCreateParticipant, createParticipant);
  *       404:
  *         description: Participant not found
  */
-router.put("/:id", validateUpdateParticipant, updateParticipant);
+router.put("/:id", requireAuth(), validateUpdateParticipant, updateParticipant);
 
 /**
  * @swagger
@@ -138,6 +141,6 @@ router.put("/:id", validateUpdateParticipant, updateParticipant);
  *       404:
  *         description: Participant not found
  */
-router.delete("/:id", deleteParticipant);
+router.delete("/:id", requireAuth(), deleteParticipant);
 
 export default router;
