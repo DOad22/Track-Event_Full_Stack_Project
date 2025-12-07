@@ -1,41 +1,128 @@
-import { ParticipantRepository } from '../repositories/participantRepository';
 import { Participant, ParticipantFormData } from '../types/participant';
 
 export class ParticipantService {
-  repo: ParticipantRepository;
+  repo: any | null;
+  baseUrl: string;
 
-  constructor(repository: ParticipantRepository) {
-    this.repo = repository;
+  constructor(repository?: any, baseUrl?: string) {
+    this.repo = repository || null;
+    this.baseUrl = baseUrl || import.meta.env.VITE_API_URL || 'http://localhost:3000';
   }
 
-  async getAllParticipants(): Promise<Participant[]> {
-    return await this.repo.getAllParticipants();
+  async getAllParticipants(token?: string): Promise<Participant[]> {
+    if (this.repo && typeof this.repo.getAllParticipants === 'function') {
+      return await this.repo.getAllParticipants(token);
+    }
+
+    const res = await fetch(`${this.baseUrl}/api/v1/participants`, {
+      headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+    });
+
+    if (!res.ok) throw new Error('Failed to fetch participants');
+    return await res.json();
   }
 
-  async getParticipantsByGame(game: string): Promise<Participant[]> {
+  async getParticipantsByGame(game: string, token?: string): Promise<Participant[]> {
     if (!game) throw new Error('Game is required');
-    return await this.repo.getParticipantsByGame(game);
+
+    if (this.repo && typeof this.repo.getParticipantsByGame === 'function') {
+      return await this.repo.getParticipantsByGame(game);
+    }
+
+    const res = await fetch(`${this.baseUrl}/api/v1/participants?game=${encodeURIComponent(game)}`, {
+      headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+    });
+    if (!res.ok) throw new Error('Failed to fetch participants by game');
+    return await res.json();
   }
 
-  async addParticipant(data: ParticipantFormData): Promise<Participant> {
+  async addParticipant(data: ParticipantFormData, token?: string): Promise<Participant> {
     if (!data.name.trim()) throw new Error('Participant name is required');
     if (!this.isValidEmail(data.email)) throw new Error('Valid email is required');
     if (!data.game) throw new Error('Game selection is required');
 
-    const newP = await this.repo.addParticipant({ ...data, status: 'pending' });
-    return newP;
+    if (this.repo && typeof this.repo.addParticipant === 'function' && !token) {
+      return await this.repo.addParticipant({ ...data, status: 'pending' });
+    }
+
+    const res = await fetch(`${this.baseUrl}/api/v1/participants`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err?.error || 'Failed to add participant');
+    }
+    return await res.json();
   }
 
-  async confirmParticipant(id: string): Promise<Participant | null> {
-    return await this.repo.updateParticipant(id, { status: 'confirmed' });
+  async confirmParticipant(id: string, token?: string): Promise<Participant | null> {
+    if (this.repo && typeof this.repo.updateParticipant === 'function' && !token) {
+      return await this.repo.updateParticipant(id, { status: 'confirmed' });
+    }
+
+    const res = await fetch(`${this.baseUrl}/api/v1/participants/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: JSON.stringify({ status: 'confirmed' }),
+    });
+
+    if (res.status === 404) return null;
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err?.error || 'Failed to confirm participant');
+    }
+    return await res.json();
   }
 
-  async declineParticipant(id: string): Promise<Participant | null> {
-    return await this.repo.updateParticipant(id, { status: 'declined' });
+  async declineParticipant(id: string, token?: string): Promise<Participant | null> {
+    if (this.repo && typeof this.repo.updateParticipant === 'function' && !token) {
+      return await this.repo.updateParticipant(id, { status: 'declined' });
+    }
+
+    const res = await fetch(`${this.baseUrl}/api/v1/participants/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: JSON.stringify({ status: 'declined' }),
+    });
+
+    if (res.status === 404) return null;
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err?.error || 'Failed to decline participant');
+    }
+    return await res.json();
   }
 
-  async removeParticipant(id: string): Promise<boolean> {
-    return await this.repo.deleteParticipant(id);
+  async removeParticipant(id: string, token?: string): Promise<boolean> {
+    if (this.repo && typeof this.repo.deleteParticipant === 'function' && !token) {
+      return await this.repo.deleteParticipant(id);
+    }
+
+    const res = await fetch(`${this.baseUrl}/api/v1/participants/${id}`, {
+      method: 'DELETE',
+      headers: {
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+    });
+
+    if (res.status === 404) return false;
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err?.error || 'Failed to delete participant');
+    }
+    return true;
   }
 
   getParticipantStats(list: Participant[]) {

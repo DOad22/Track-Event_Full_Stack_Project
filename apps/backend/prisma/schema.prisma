@@ -12,11 +12,14 @@ model Score {
   player    String
   points    Int
   createdAt DateTime @default(now())
+  userId    String   
 }
+
 model Participant {
   id        Int      @id @default(autoincrement())
   name      String
   email     String   @unique
+  idNo      String? 
   createdAt DateTime @default(now())
 }
 
@@ -25,7 +28,7 @@ model Event {
   title    String   @unique
   date     DateTime
   location String?
-  tags     String[]
+ tags     String[]
   description String?
   userId   Int
   user     User?     @relation(fields: [userId], references: [id])

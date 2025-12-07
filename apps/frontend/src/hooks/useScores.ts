@@ -1,31 +1,46 @@
 import { useState, useEffect } from "react";
 import { Score } from "../types";
-import { scoreService } from "../services/scoreService";
+import { scoreRepository } from "../repositories/scoreRepository";
+import { useAuth } from "@clerk/clerk-react";
 
 export const useScores = () => {
-  
-  const [scores, setScores] = useState<Score[]>(() => {
-    const saved = localStorage.getItem("scores");
-    if (saved) return JSON.parse(saved);
-    const initial = scoreService.getScores();
-    localStorage.setItem("scores", JSON.stringify(initial));
-    return initial;
-  });
+  const [scores, setScores] = useState<Score[]>([]);
+  const { getToken } = useAuth();
 
-  const addScore = (participantId: number, points: number) => {
-    const result = scoreService.addScore(participantId, points);
-    if (result) {
-      const updatedScores = scoreService.getScores();
-      setScores(updatedScores);
-      localStorage.setItem("scores", JSON.stringify(updatedScores)); 
-    } else {
-      alert("Invalid score. Negative scores are not allowed.");
+  const fetchScores = async () => {
+    try {
+      const data = await scoreRepository.getAll();
+      setScores(data);
+    } catch (err) {
+      console.error("Error loading scores:", err);
     }
   };
-  
+
+  const addScore = async (player: string, points: number) => {
+    try {
+      const token = await getToken({ template: "default" });
+
+      if (!token) {
+        alert("You must be signed in to add a score.");
+        return;
+      }
+
+      const newScore = await scoreRepository.add(player, points, token);
+
+      if (newScore) {
+        setScores((prev) => [newScore, ...prev]);
+      } else {
+        alert("Error adding score.");
+      }
+    } catch (err) {
+      console.error("Error adding score:", err);
+      alert("Error adding score.");
+    }
+  };
+
   useEffect(() => {
-    localStorage.setItem("scores", JSON.stringify(scores));
-  }, [scores]);
+    fetchScores();
+  }, []);
 
   return { scores, addScore };
 };
