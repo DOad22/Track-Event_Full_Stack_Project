@@ -23,13 +23,16 @@ model Participant {
 }
 
 model Event {
-  id          Int      @id @default(autoincrement())
-  title       String
+  id       Int      @id @default(autoincrement())
+  title    String   @unique
+  date     DateTime
+  location String?
+  tags     String[]
   description String?
-  date        DateTime
-  location    String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  userId   Int
+  user     User?     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model PastEvent {
@@ -39,4 +42,13 @@ model PastEvent {
   date        DateTime
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  userId      String?
 }
+
+model User {
+  id     Int     @id @default(autoincrement())
+  name   String
+  email  String  @unique
+  events Event[]
+}
+

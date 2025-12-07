@@ -2,25 +2,50 @@ import { useState, useEffect } from "react";
 import eventService from "../services/eventService";
 import { Event } from "../repositories/eventRepository";
 
+export interface EventInput {
+  title: string;
+  description?: string;
+  date: string;
+  location: string;
+  tags?: string[];
+  userId: number;
+}
+
 export function useEvents() {
   const [events, setEvents] = useState<Event[]>([]);
 
+
   useEffect(() => {
-    setEvents(eventService.getEvents());
+    async function fetchEvents() {
+      try {
+        const data: Event[] = await eventService.getEvents();
+        setEvents(data);
+      } catch (err) {
+        console.error("Failed to fetch events:", err);
+      }
+    }
+    fetchEvents();
   }, []);
 
-  const addEvent = (name: string, date: string, time: string) => {
+
+  const addEvent = async (eventData: EventInput) => {
     try {
-      const updated = eventService.createEvent(name, date, time);
-      setEvents([...updated]);
-    } catch (error: any) {
-      alert(error.message || "All fields are required!");
+      const newEvent: Event = await eventService.createEvent(eventData);
+      setEvents(prev => [...prev, newEvent]);
+    } catch (err) {
+      console.error("Failed to create event:", err);
+      throw err;
     }
   };
 
-  const deleteEvent = (id: number) => {
-    const updated = eventService.deleteEvent(id);
-    setEvents([...updated]);
+
+  const deleteEvent = async (id: number) => {
+    try {
+      await eventService.deleteEvent(id);
+      setEvents(prev => prev.filter(ev => ev.id !== id));
+    } catch (err) {
+      console.error("Failed to delete event:", err);
+    }
   };
 
   return { events, addEvent, deleteEvent };

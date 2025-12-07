@@ -12,9 +12,15 @@
     "start:frontend": "npm run dev --workspace=apps/frontend"
   },
   "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.10.1",
     "concurrently": "^9.1.2"
   },
   "dependencies": {
-    "@clerk/clerk-react": "^5.57.0"
+
+    "@clerk/clerk-react": "^5.57.0",
+    "@clerk/express": "^1.7.55",
+    "@clerk/types": "^4.101.5",
+
   }
 }

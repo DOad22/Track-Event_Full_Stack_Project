@@ -1,26 +1,51 @@
-import eventRepository, { Event } from "../repositories/eventRepository";
+import { Event } from "../repositories/eventRepository";
+
+const API_URL = "http://localhost:3000/api/events";
+
+interface EventData {
+  title: string;
+  description?: string;
+  date: string;
+  location: string;
+  tags?: string[];
+  userId: number;
+}
 
 const eventService = {
-  getEvents(): Event[] {
-    return eventRepository.getAll();
+  
+  async getEvents(): Promise<Event[]> {
+    const res = await fetch(API_URL);
+    if (!res.ok) throw new Error("Failed to fetch events");
+    return res.json();
   },
 
-  createEvent(name: string, date: string, time: string): Event[] {
-    if (!name || !date || !time) throw new Error("All fields required");
-
-    const newEvent: Event = {
-      id: Date.now(),
-      name,
-      date,
-      time
-    };
-
-    return eventRepository.add(newEvent);
+  
+  async getPersonalizedEvents(userTags: string[]): Promise<Event[]> {
+    const res = await fetch(`${API_URL}/personalized?tags=${encodeURIComponent(userTags.join(","))}`);
+    if (!res.ok) throw new Error("Failed to fetch personalized events");
+    return res.json();
   },
 
-  deleteEvent(id: number): Event[] {
-    return eventRepository.remove(id);
-  }
+  
+  async createEvent(eventData: EventData): Promise<Event> {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(eventData),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      console.error("Error response:", err);
+      throw new Error("Failed to create event");
+    }
+    return res.json();
+  },
+
+  
+  async deleteEvent(id: number): Promise<void> {
+    const res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+    if (!res.ok) throw new Error("Failed to delete event");
+  },
 };
 
 export default eventService;
