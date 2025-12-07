@@ -1,6 +1,6 @@
 import { Score } from "../types";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
- 
+
 export const scoreRepository = {
   getAll: async (): Promise<Score[]> => {
     try {
@@ -11,7 +11,7 @@ export const scoreRepository = {
       return [];
     }
   },
- 
+
   add: async (
     player: string,
     points: number,
@@ -26,9 +26,9 @@ export const scoreRepository = {
         },
         body: JSON.stringify({ player, points }),
       });
- 
+
       if (!res.ok) throw new Error("Failed to add score");
- 
+
       return await res.json();
     } catch (err) {
       console.error(err);
