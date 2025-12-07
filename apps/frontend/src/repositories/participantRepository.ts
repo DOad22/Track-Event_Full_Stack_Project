@@ -1,49 +1,113 @@
-import { Participant } from '../types/participant';
-import { participantTestData } from '../data/participantData';
+import { Participant } from "../types/participant";
+
+const BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1`;
+const PARTICIPANT_ENDPOINT = "/participants";
+
+type ParticipantsResponseJSON = { message: string; data: Participant[] };
+type ParticipantResponseJSON = { message: string; data: Participant };
 
 export class ParticipantRepository {
+  // GET ALL PARTICIPANTS
+  async getAllParticipants(sessionToken?: string | null): Promise<Participant[]> {
+    const headers: Record<string, string> = {};
 
-  async getAllParticipants(): Promise<Participant[]> {
-    return [...participantTestData]; 
+    if (sessionToken) {
+      headers["Authorization"] = `Bearer ${sessionToken}`;
+    }
+
+    const response = await fetch(`${BASE_URL}${PARTICIPANT_ENDPOINT}`, {
+      headers,
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch participants");
+    }
+
+    const json: ParticipantsResponseJSON = await response.json();
+    return json.data;
   }
 
-  async getParticipantsByGame(game: string): Promise<Participant[]> {
-    return participantTestData.filter(p => p.game.toLowerCase() === game.toLowerCase());
+  async getParticipantsByGame(
+    game: string,
+    sessionToken?: string | null
+  ): Promise<Participant[]> {
+    const headers: Record<string, string> = {};
+
+    if (sessionToken) {
+      headers["Authorization"] = `Bearer ${sessionToken}`;
+    }
+
+    const response = await fetch(
+      `${BASE_URL}${PARTICIPANT_ENDPOINT}?game=${encodeURIComponent(game)}`,
+      { headers }
+    );
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch participants for game: ${game}`);
+    }
+
+    const json: ParticipantsResponseJSON = await response.json();
+    return json.data;
   }
 
-  async addParticipant(data: Omit<Participant, 'id'>): Promise<Participant> {
-   
-    const nextId =
-      participantTestData.length > 0
-        ? (Math.max(...participantTestData.map(p => Number(p.id))) + 1).toString()
-        : '1';
+  async addParticipant(
+    data: Omit<Participant, "id">,
+    sessionToken: string
+  ): Promise<Participant> {
+    const response = await fetch(`${BASE_URL}${PARTICIPANT_ENDPOINT}`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionToken}`,
+      },
+    });
 
-    const newParticipant: Participant = {
-      id: nextId,
-      ...data
-    };
+    if (!response.ok) {
+      throw new Error("Failed to add participant");
+    }
 
-    participantTestData.push(newParticipant);
-    return newParticipant;
+    const json: ParticipantResponseJSON = await response.json();
+    return json.data;
   }
 
-  async updateParticipant(id: string, updates: Partial<Participant>): Promise<Participant | null> {
-    const index = participantTestData.findIndex(p => p.id === id);
-    if (index === -1) return null;
+  async updateParticipant(
+    id: string,
+    updates: Partial<Participant>,
+    sessionToken: string
+  ): Promise<Participant> {
+    const response = await fetch(`${BASE_URL}${PARTICIPANT_ENDPOINT}/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(updates),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionToken}`,
+      },
+    });
 
-    participantTestData[index] = {
-      ...participantTestData[index],
-      ...updates
-    };
+    if (!response.ok) {
+      throw new Error(`Failed to update participant with id ${id}`);
+    }
 
-    return participantTestData[index];
+    const json: ParticipantResponseJSON = await response.json();
+    return json.data;
   }
+  
+  async deleteParticipant(
+    id: string,
+    sessionToken: string
+  ): Promise<boolean> {
+    const response = await fetch(`${BASE_URL}${PARTICIPANT_ENDPOINT}/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${sessionToken}`,
+      },
+    });
 
-  async deleteParticipant(id: string): Promise<boolean> {
-    const index = participantTestData.findIndex(p => p.id === id);
-    if (index === -1) return false;
+    if (!response.ok) {
+      throw new Error(`Failed to delete participant with id ${id}`);
+    }
 
-    participantTestData.splice(index, 1);
     return true;
   }
 }

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { ParticipantService } from '../services/participantService';
 import { ParticipantRepository } from '../repositories/participantRepository';
 import { Participant, ParticipantFormData } from '../types/participant';
+import { useAuth } from '@clerk/clerk-react';
 
 export const useParticipants = () => {
   const [participants, setParticipants] = useState<Participant[]>([]);
@@ -10,6 +11,7 @@ export const useParticipants = () => {
 
   const repo = new ParticipantRepository();
   const service = new ParticipantService(repo);
+  const { getToken } = useAuth();
 
   useEffect(() => {
     loadAll();
@@ -19,23 +21,11 @@ export const useParticipants = () => {
     setLoading(true);
     setError(null);
     try {
-      const data = await service.getAllParticipants();
+      const token = (await getToken()) || undefined; // null → undefined
+      const data = await service.getAllParticipants(token);
       setParticipants(data);
     } catch {
       setError('Failed to load participants');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const loadByGame = async (game: string) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const data = await service.getParticipantsByGame(game);
-      setParticipants(data);
-    } catch {
-      setError('Failed to load game participants');
     } finally {
       setLoading(false);
     }
@@ -45,7 +35,8 @@ export const useParticipants = () => {
     setLoading(true);
     setError(null);
     try {
-      const newP = await service.addParticipant(formData);
+      const token = (await getToken()) || undefined; // null → undefined
+      const newP = await service.addParticipant(formData, token!); // token guaranteed for POST
       setParticipants(prev => [...prev, newP]);
       return newP;
     } catch (err) {
@@ -57,39 +48,18 @@ export const useParticipants = () => {
   };
 
   const confirmParticipant = async (id: string) => {
-    setError(null);
-    try {
-      const updated = await service.confirmParticipant(id);
-      if (updated) setParticipants(prev => prev.map(p => (p.id === id ? updated : p)));
-      return updated;
-    } catch {
-      setError('Failed to confirm participant');
-      throw new Error('Failed to confirm participant');
-    }
+    const token = (await getToken()) || undefined;
+    return service.confirmParticipant(id, token!);
   };
 
   const declineParticipant = async (id: string) => {
-    setError(null);
-    try {
-      const updated = await service.declineParticipant(id);
-      if (updated) setParticipants(prev => prev.map(p => (p.id === id ? updated : p)));
-      return updated;
-    } catch {
-      setError('Failed to decline participant');
-      throw new Error('Failed to decline participant');
-    }
+    const token = (await getToken()) || undefined;
+    return service.declineParticipant(id, token!);
   };
 
   const removeParticipant = async (id: string) => {
-    setError(null);
-    try {
-      const success = await service.removeParticipant(id);
-      if (success) setParticipants(prev => prev.filter(p => p.id !== id));
-      return success;
-    } catch {
-      setError('Failed to remove participant');
-      throw new Error('Failed to remove participant');
-    }
+    const token = (await getToken()) || undefined;
+    return service.removeParticipant(id, token!);
   };
 
   const getStats = () => service.getParticipantStats(participants);
@@ -99,7 +69,6 @@ export const useParticipants = () => {
     loading,
     error,
     loadAllParticipants: loadAll,
-    loadGameParticipants: loadByGame,
     addParticipant,
     confirmParticipant,
     declineParticipant,
